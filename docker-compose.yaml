@@ -1,0 +1,45 @@
+version: "3.7"
+
+# Define services
+services:
+  # App backend service
+  backend:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: BackEnd # Use an image built from the specified dockerfile in the `polling-app-server` directory.
+    ports:
+      - "8055:8055" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
+    depends_on:
+      - db # This service depends on mysql. Start that first.
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.0.1:6704/house_rent_mgt1?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+    
+
+  # Database Service (Mysql)
+  db:
+    image: mysql:5.7
+    ports:
+      - "6704:3306"
+    restart: always
+    environment:
+      MYSQL_DATABASE: house_rent_mgt1
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: Admin@123
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+# Volumes
+volumes:
+  db-data:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  backend:
+
