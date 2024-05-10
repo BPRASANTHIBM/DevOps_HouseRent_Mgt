@@ -3,7 +3,7 @@ version: "3.7"
 # Define services
 services:
   # App backend service
-  backend:
+  ./target/SpringJPA_HouseRent_Mgt-1-0.0.1-SNAPSHOT.jar app.jar:
     # Configuration for building the docker image for the backend service
     build:
       context: BackEnd # Use an image built from the specified dockerfile in the `polling-app-server` directory.
@@ -17,7 +17,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - backend
+      - ./target/SpringJPA_HouseRent_Mgt-1-0.0.1-SNAPSHOT.jar app.jar
     
 
   # Database Service (Mysql)
@@ -34,12 +34,12 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     networks:
-      - backend
+      - ./target/SpringJPA_HouseRent_Mgt-1-0.0.1-SNAPSHOT.jar app.jar
 # Volumes
 volumes:
   db-data:
 
 # Networks to be created to facilitate communication between containers
 networks:
-  backend:
+  ./target/SpringJPA_HouseRent_Mgt-1-0.0.1-SNAPSHOT.jar app.jar:
 
