@@ -6,7 +6,7 @@ services:
   backend:
     # Configuration for building the docker image for the backend service
     build:
-      context: ./target/SpringJPA_HouseRent_Mgt-1-0.0.1-SNAPSHOT.jar # Use an image built from the specified dockerfile in the `polling-app-server` directory.
+      context: ../HouseRent_Mgt_DevOps # Use an image built from the specified dockerfile in the `polling-app-server` directory.
     ports:
       - "8055:8055" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
